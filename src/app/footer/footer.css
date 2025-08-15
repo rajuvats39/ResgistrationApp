@@ -1,0 +1,7 @@
+/* footer.component.scss */
+.intramed-footer {
+  background-color: #dedede;
+  color: #aaaaaa;
+  border-bottom: 5px solid #aaaaaa;
+  width: 100%;
+}

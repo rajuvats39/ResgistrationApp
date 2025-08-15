@@ -35,7 +35,8 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ]
           },
           "configurations": {
@@ -64,6 +65,10 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+           "options": {
+            "proxyConfig": "proxy.conf.json",
+            "hmr": false
+          },
           "configurations": {
             "production": {
               "buildTarget": "RegistrationApp:build:production"

@@ -1,0 +1,8 @@
+{
+    "/api": {
+        "target": "https://codingexercise.speakcore.com",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    }
+}

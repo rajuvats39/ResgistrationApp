@@ -1,0 +1,10 @@
+.intramed-header {
+  background-color: #fff; 
+  border-bottom: 2px solid #ddd;
+  box-shadow: #aaaaaa;
+}
+
+.logo {
+  height: 50px;
+  object-fit: contain;
+}

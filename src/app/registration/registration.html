@@ -1,0 +1,157 @@
+<div class="page-wrapper d-flex flex-column min-vh-100">
+    <h2 class="section-header text-center mt-3 bg-color text-white">
+        {{ currentStep === 1 ? 'CONTACT INFORMATION' : currentStep === 2 ? 'SUBMIT INFO' : 'COMPLETE' }}
+    </h2>
+
+    <div class="flex-grow-1 d-flex justify-content-center">
+        <div class="col-12 col-md-7 my-4">
+            <div class="stepper-container">
+                <div class="step" [class.active]="currentStep >= 1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">REGISTER</div>
+                </div>
+                <div class="step-line" [class.active]="currentStep >= 2"></div>
+                <div class="step" [class.active]="currentStep >= 2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">SUBMIT INFO</div>
+                </div>
+                <div class="step-line" [class.active]="currentStep >= 3"></div>
+                <div class="step" [class.active]="currentStep >= 3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">COMPLETE</div>
+                </div>
+            </div>
+            <form id="templateForm" #templateForm="ngForm" class="border p-4 bg-white shadow-sm rounded-3" novalidate>
+                @if (currentStep === 1) {
+                <div>
+                    <div class="mt-2">
+                        <label for="firstname" class="form-label"
+                            [class.text-danger]="firstNameCtrl.invalid && firstNameCtrl.touched"
+                            [class.fw-bold]="firstNameCtrl.invalid && firstNameCtrl.touched">
+                            First Name: <span class="text-danger fw-bold">*</span>
+                        </label>
+                        <input type="text" id="firstname" name="firstname" class="form-control"
+                            [class.is-invalid]="firstNameCtrl.invalid && firstNameCtrl.touched"
+                            [class.is-valid]="firstNameCtrl.valid && firstNameCtrl.touched" [(ngModel)]="firstName"
+                            placeholder="First Name" required #firstNameCtrl="ngModel" />
+                        <div class="invalid-feedback">
+                            First Name is required.
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <label for="lastname" class="form-label"
+                            [class.text-danger]="lastNameCtrl.invalid && lastNameCtrl.touched"
+                            [class.fw-bold]="lastNameCtrl.invalid && lastNameCtrl.touched">
+                            Last Name: <span class="text-danger fw-bold">*</span>
+                        </label>
+                        <input type="text" id="lastname" name="lastname" class="form-control"
+                            [class.is-invalid]="lastNameCtrl.invalid && lastNameCtrl.touched"
+                            [class.is-valid]="lastNameCtrl.valid && lastNameCtrl.touched" [(ngModel)]="lastName"
+                            placeholder="Last Name" required #lastNameCtrl="ngModel" />
+                        <div class="invalid-feedback">
+                            Last Name is required.
+                        </div>
+                    </div>
+                    <div class="mt-2 col-3">
+                        <label for="state" class="form-label"
+                            [class.text-danger]="stateCtrl.invalid && stateCtrl.touched"
+                            [class.fw-bold]="stateCtrl.invalid && stateCtrl.touched">
+                            State: <span class="text-danger fw-bold">*</span>
+                        </label>
+                        <select id="state" name="state" class="form-select"
+                            [class.is-invalid]="stateCtrl.invalid && stateCtrl.touched"
+                            [class.is-valid]="stateCtrl.valid && stateCtrl.touched" [(ngModel)]="states" required
+                            #stateCtrl="ngModel">
+                            <option value="" disabled selected>Select State</option>
+                            <option [ngValue]="state.id" *ngFor="let state of stateList">
+                                {{ state.name }}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a state.
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <label for="email" class="form-label"
+                            [class.text-danger]="emailCtrl.invalid && emailCtrl.touched"
+                            [class.fw-bold]="emailCtrl.invalid && emailCtrl.touched">
+                            Email: <span class="text-danger fw-bold">*</span>
+                        </label>
+                        <input type="email" id="email" name="email" class="form-control"
+                            [class.is-invalid]="emailCtrl.invalid && emailCtrl.touched"
+                            [class.is-valid]="emailCtrl.valid && emailCtrl.touched" [(ngModel)]="email"
+                            placeholder="Email" required email #emailCtrl="ngModel" />
+                        <div class="invalid-feedback">
+                            Please provide your email address<br>
+                            All meeting correspondence will be sent via email.
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <label for="confirmEmail" class="form-label" [class.text-danger]="
+              (confirmEmailCtrl.invalid && confirmEmailCtrl.touched) ||
+              (confirmEmailCtrl.touched && confirmEmail !== email)
+            " [class.fw-bold]="
+              (confirmEmailCtrl.invalid && confirmEmailCtrl.touched) ||
+              (confirmEmailCtrl.touched && confirmEmail !== email)
+            ">
+                            Confirm Email: <span class="text-danger fw-bold">*</span>
+                        </label>
+                        <input type="email" id="confirmEmail" name="confirmEmail" class="form-control"
+                            [class.is-invalid]="
+              (confirmEmailCtrl.invalid && confirmEmailCtrl.touched) ||
+              (confirmEmailCtrl.touched && confirmEmail !== email)
+            " [class.is-valid]="
+              confirmEmailCtrl.valid &&
+              confirmEmailCtrl.touched &&
+              confirmEmail === email
+            " [(ngModel)]="confirmEmail" placeholder="Confirm Email" required #confirmEmailCtrl="ngModel" />
+                        @if (confirmEmailCtrl.invalid) {
+                        <div class="invalid-feedback">
+                            Please confirm your email.
+                        </div>
+                        }
+                        @if (confirmEmailCtrl.touched && confirmEmail && confirmEmail !== email) {
+                        <div class="invalid-feedback">
+                            Emails do not match.
+                        </div>
+                        }
+                    </div>
+                    <div class="form-check mt-3">
+                        <input type="checkbox" id="isMarried" name="isMarried" class="form-check-input"
+                            [(ngModel)]="subscribe" />
+                        <label for="isMarried" class="form-check-label">
+                            Subscribe to Newsletter
+                        </label>
+                    </div>
+                    <div class="text-end mt-3">
+                        <button type="button" class="btn bg-color text-white" (click)="goNextStepper(templateForm)">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+                }
+                @if (currentStep === 2) {
+                <div>
+                    <div class="d-flex justify-content-between mt-3">
+                        <button type="button" class="btn btn-secondary" (click)="goPrev()">Back</button>
+                        <button type="button" class="btn bg-color text-white" (click)="submitForm(templateForm)">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+                }
+                @if (currentStep === 3) {
+                <div>
+                    <h2 class="fw-bold">Thank you for registering!</h2><br>
+                    <h5 class="text-muted fw-bold">You should receive a confirmation email momentarily
+                        containing additional details.
+                    </h5>
+                    <button type="button" class="btn bg-color text-white" routerLink="/login">
+                        GoTo Login ->
+                    </button>
+                </div>
+                }
+            </form>
+        </div>
+    </div>
+</div>

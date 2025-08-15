@@ -1,0 +1,18 @@
+<div class="page-wrapper d-flex flex-column min-vh-100">
+  <h2 class="section-header text-center mt-3 bg-color text-white"> LOGIN </h2>
+  <div class="flex-grow-1 d-flex justify-content-center">
+    <div class="col-12 col-md-7 my-4">
+      <div class="border p-4 bg-white shadow-sm rounded-3">
+        <p class="text-muted fw-bold">Please enter the case sensitive password from your official invitation.</p>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Password:</label>
+          <input type="password" class="form-control" [(ngModel)]="password" name="password" />
+        </div>
+        <div class="text-end">
+          <button class="btn bg-color" (click)="login()">Login</button>
+        </div>
+        <div class="text-danger mt-2" *ngIf="error">{{error}}</div>
+      </div>
+    </div>
+  </div>
+</div>

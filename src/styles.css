@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+.page-thumb {
+    width: 90px;
+    height: 60px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.bg-color {
+    background: #2988b5 !important;
+    color: white !important;
+}
