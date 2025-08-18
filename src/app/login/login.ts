@@ -8,18 +8,29 @@ import { Router } from '@angular/router';
   styleUrl: './login.css'
 })
 export class Login {
-  password = '';
-  error = '';
-  readonly PLAIN_PASSWORD = 'CmW123'; // change as required
 
-  constructor(private router: Router) { }
+  public password: string = '';
+  public errorMessage: string = '';
+  public readonly correctPassword = 'Angular@123';
 
-  login() {
-    this.error = '';
-    if (this.password === this.PLAIN_PASSWORD) {
-      this.router.navigate(['/register']);
+  constructor(
+    private readonly router: Router
+  ) { }
+
+  onPasswordChange() {
+    if (this.password && this.password !== this.correctPassword) {
+      this.errorMessage = 'Invalid password, Please enter the case sensitive password.';
     } else {
-      this.error = 'Invalid password';
+      this.errorMessage = '';
     }
   }
+
+  onLogin() {
+    if (this.password === this.correctPassword) {
+      this.router.navigate(['/register']);
+    } else {
+      this.errorMessage = 'Invalid password, Please enter the case sensitive password.';
+    }
+  }
+
 }

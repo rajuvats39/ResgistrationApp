@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { States } from '../state-list.model';
 import { RegistrationappService } from '../registrationapp.service';
@@ -10,7 +10,7 @@ import { RegistrationRequestModel } from '../registration-request-model';
   templateUrl: './registration.html',
   styleUrl: './registration.css'
 })
-export class Registration implements OnInit {
+export class Registration {
 
   public currentStep = 1;
   public firstName = '';
@@ -22,21 +22,16 @@ export class Registration implements OnInit {
   public isLoading: boolean;
 
   stateList = [
-    new States('Maharashtra', 'Maharashtra'),
-    new States('California', 'California'),
-    new States('London', 'London')
+    new States('MH', 'Maharashtra'),
+    new States('CA', 'California'),
+    new States('LDN', 'London')
   ];
   registrationDetails: Registration | null = null;
   public Key = 'jdoe@sample.com';
-  public registrationId = '3fa85f64-5717-4562-b3fc-2c963f66afa6';
 
   constructor(
     private readonly registrationappService: RegistrationappService
   ) { }
-
-  ngOnInit(): void {
-    this.loadRegistrationDetails();
-  }
 
   public goNextStepper(form: NgForm): void {
     if (this.currentStep === 1) {
@@ -74,43 +69,17 @@ export class Registration implements OnInit {
       email: this.email,
       subscribe: this.subscribe
     };
-    this.registrationappService.createRegistration(request, this.email).subscribe((response) => {
-      console.log('Response', response);
-    });
-    alert('Form submitted successfully!');
-    form.resetForm();
-    this.currentStep = 3;
-  }
-
-  public loadRegistrationDetails(): void {
-    this.isLoading = true;
-    this.registrationappService.getRegistrationById(this.registrationId, this.Key).subscribe({
+    this.registrationappService.createRegistration(request, this.email).subscribe({
       next: (response) => {
-        this.registrationDetails = response;
-        console.log('Registration Details:', this.registrationDetails);
+        console.log('Response', response);
+        alert('Form submitted successfully!');
+        form.resetForm();
+        this.currentStep = 3;
       },
-      error: (error) => {
-        console.error('Error loading registration details:', error);
-      },
-      complete: () => {
-        this.isLoading = false;
+      error: (err) => {
+        console.error('API error:', err);
+        alert('Registration failed. Please check your inputs and try again.');
       }
     });
   }
-
-  public deleteRegistrationRecord(): void {
-    this.isLoading = true;
-    this.registrationappService.deleteRegistration(this.registrationId, this.Key).subscribe({
-      next: (response) => {
-        console.log('Registration deleted successfully:', response);
-      },
-      error: (error) => {
-        console.error('Error deleting registration:', error);
-      },
-      complete: () => {
-        this.isLoading = false;
-      }
-    });
-  }
-
 }

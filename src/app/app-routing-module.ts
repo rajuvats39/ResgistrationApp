@@ -4,10 +4,11 @@ import { Login } from './login/login';
 import { Registration } from './registration/registration';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'register' },
+  // { path: '', pathMatch: 'full', redirectTo: 'login' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'register', component: Registration },
   { path: 'login', component: Login },
-  { path: '**', redirectTo: 'register' }
+  { path: '**', redirectTo: 'login' }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

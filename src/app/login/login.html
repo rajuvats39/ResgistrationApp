@@ -5,14 +5,18 @@
       <div class="border p-4 bg-white shadow-sm rounded-3">
         <p class="text-muted fw-bold">Please enter the case sensitive password from your official invitation.</p>
         <div class="mb-3">
-          <label class="form-label fw-bold">Password:</label>
-          <input type="password" class="form-control" [(ngModel)]="password" name="password" />
+          <form #loginForm="ngForm" (ngSubmit)="onLogin()">
+            <label class="form-label fw-bold">Password:</label>
+            <input type="password" class="form-control" [(ngModel)]="password" (ngModelChange)="onPasswordChange()"
+              name="password" />
+            <div class="col-12 text-end mt-2">
+              <button class="btn bg-color" (click)="onLogin()">Login</button>
+            </div>
+          </form>
+          @if(errorMessage){
+          <div class="text-danger mt-2 col-12">{{errorMessage}}</div>
+          }
         </div>
-        <div class="text-end">
-          <button class="btn bg-color" (click)="login()">Login</button>
-        </div>
-        <div class="text-danger mt-2" *ngIf="error">{{error}}</div>
       </div>
     </div>
   </div>
-</div>
